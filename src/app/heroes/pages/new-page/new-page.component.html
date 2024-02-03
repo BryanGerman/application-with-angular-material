@@ -1,1 +1,71 @@
-<p>new-page works!</p>
+<h1>
+    {{ currentHero.id ? 'Editar ' : 'Añadir ' }} Heroe
+</h1>
+
+<mat-divider class="mb-2"></mat-divider>
+
+<div class="grid">
+    <div class="col-12 sm:col-6">
+        <mat-card>
+            <mat-card-content>
+                <form class="grid" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+                    <mat-form-field class="col-12 sm:col-6">
+                        <mat-label>Super Héroe</mat-label>
+                        <input matInput type="text" required formControlName="localized_name">
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12">
+                        <mat-label>Tipo de Ataque</mat-label>
+                        <mat-select required formControlName="attack_type">
+                            <mat-option *ngFor="let attack of attackType | keyvalue" [value]="attack.value">
+                                {{attack.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12">
+                        <mat-label>Roles</mat-label>
+                        <mat-select required formControlName="roles">
+                            <mat-option *ngFor="let role of roles | keyvalue" [value]="role.value">
+                                {{role.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12">
+                        <mat-label>Atributo Primario</mat-label>
+                        <mat-select required formControlName="primary_attr">
+                            <mat-option *ngFor="let attribute of attributes | keyvalue" [value]="attribute.value">
+                                {{attribute.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12">
+                        <mat-label>Número de piernas</mat-label>
+                        <input matInput type="number" formControlName="legs" min=0>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12">
+                        <mat-label>Imagen Alternativa</mat-label>
+                        <input matInput type="text" required formControlName="alt_image">
+                    </mat-form-field>
+                </form>
+                <div class="flex flex-justify">
+                    <button mat-flat-button color="warn" *ngIf="currentHero.id" (click)="onDeleteHero()">
+                        Borrar
+                    </button>
+                    <span class="spacer"></span>
+                    <button mat-flat-button color="primary" (click)="onSubmit()">
+                        Guardar
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-12 sm:col-6">
+        <mat-card>
+            <img [src]="currentHero | heroImage" alt="Imagen del heroe" mat-card-image>
+        </mat-card>
+    </div>
+</div>
